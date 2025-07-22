@@ -1,6 +1,9 @@
 import { component$, useSignal, useComputed$ } from '@builder.io/qwik';
 import { Icon } from '../basics/icons';
-import { iconRegistry, type IconName } from '../icons-registry/icons.data';
+import { iconRegistry, } from '../icons-registry/icons.data';
+import { type IconName } from '../icons-registry/icons.types';
+import BetterButton from '~/components/basics/button';
+
 
 interface IconSelectorProps {
   selectedIcon?: IconName;
@@ -14,12 +17,12 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
 
   const filteredIcons = useComputed$(() => {
     const icons = Object.keys(iconRegistry) as IconName[];
-    
+
     if (!props.filterable || !searchTerm.value) {
       return icons;
     }
-    
-    return icons.filter(name => 
+
+    return icons.filter(name =>
       name.toLowerCase().includes(searchTerm.value.toLowerCase())
     );
   });
@@ -36,10 +39,10 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
           />
         </div>
       )}
-      
+
       <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2 max-h-96 overflow-y-auto">
         {filteredIcons.value.map((iconName) => (
-          <button
+          <BetterButton
             key={iconName}
             class={[
               "btn btn-ghost btn-square",
@@ -49,7 +52,7 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
             title={iconName}
           >
             <Icon name={iconName} size={props.size || 24} />
-          </button>
+          </BetterButton>
         ))}
       </div>
 
