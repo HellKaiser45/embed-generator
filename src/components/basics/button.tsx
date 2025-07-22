@@ -1,8 +1,9 @@
-import { component$, Slot, type ClassList, type QwikIntrinsicElements } from '@builder.io/qwik';
+import { component$, Slot, type ClassList } from '@builder.io/qwik';
 
-interface ButtonProps extends QwikIntrinsicElements['button'] {
+interface ButtonProps {
   class?: ClassList;
   onClick$?: () => void;
+  [key: string]: any; // Allow any other button attributes
 }
 
 export default component$<ButtonProps>(({ class: className, onClick$, ...props }) => {
