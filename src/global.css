@@ -2,5 +2,3 @@
 @plugin "daisyui" {
   themes: silk --default, dim --prefersdark;
 }
-
-
