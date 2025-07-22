@@ -55,17 +55,16 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
     );
   });
 
-  const isIconSelected = $((iconName: IconName) => {
-    return props.selectedLinks?.some(link => link.icon === iconName) ?? false;
-  });
-
   const handleIconToggle = $((iconName: IconName) => {
     const currentLinks = props.selectedLinks ?? [];
+    const alreadySelected = currentLinks.some(link => link.icon === iconName);
     
-    if (isIconSelected(iconName)) {
+    if (alreadySelected) {
+      // Remove the link
       const filtered = currentLinks.filter(link => link.icon !== iconName);
       props.onLinksChange?.(filtered);
     } else {
+      // Add new link
       if (props.maxLinks && currentLinks.length >= props.maxLinks) return;
       
       const newLink: SocialLink = {
@@ -110,7 +109,7 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
               <IconButton
                 key={iconName}
                 icon={iconName}
-                isSelected={isIconSelected(iconName)}
+                isSelected={props.selectedLinks?.some(link => link.icon === iconName) ?? false}
                 onClick$={() => handleIconToggle(iconName)}
                 size={20}
               />
