@@ -6,7 +6,11 @@ import BetterButton from '~/components/basics/button';
 import { SocialBannerContext } from "~/contexts/social-banner-context";
 
 
-export const IconSelector = component$(() => {
+interface IconSelectorProps {
+  onChange$?: (iconName: IconName, checked: boolean) => void;
+}
+
+export const IconSelector = component$<IconSelectorProps>(({ onChange$ }) => {
   const state = useContext(SocialBannerContext);
 
 
