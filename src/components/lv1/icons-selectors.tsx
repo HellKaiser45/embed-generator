@@ -17,6 +17,30 @@ interface IconSelectorProps {
   filterable?: boolean;
 }
 
+// Wrapper component for BetterButton
+export const IconButton = component$<{
+  icon: IconName;
+  isSelected: boolean;
+  onClick$: () => void;
+  size?: number;
+}>(({ icon, isSelected, onClick$, size = 24 }) => {
+  return (
+    <BetterButton
+      class={[
+        "btn btn-square btn-sm",
+        isSelected ? "btn-primary" : "btn-ghost"
+      ]}
+      onClick$={onClick$}
+      title={isSelected ? "Remove" : "Add"}
+    >
+      <Icon name={icon} size={size} />
+      {isSelected && (
+        <span class="absolute -top-1 -right-1 badge badge-xs badge-success">✓</span>
+      )}
+    </BetterButton>
+  );
+});
+
 export const IconSelector = component$<IconSelectorProps>((props) => {
   const searchTerm = useSignal('');
 
@@ -83,25 +107,15 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
           )}
           
           <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2 max-h-64 overflow-y-auto">
-            {availableIcons.value.map((iconName) => {
-              const isSelected = isIconSelected(iconName);
-              return (
-                <BetterButton
-                  key={iconName}
-                  class={[
-                    "btn btn-square btn-sm",
-                    isSelected ? "btn-primary" : "btn-ghost"
-                  ].join(' ')}
-                  onClick$={() => handleIconToggle(iconName)}
-                  title={isSelected ? "Remove" : "Add"}
-                >
-                  <Icon name={iconName} size={20} />
-                  {isSelected && (
-                    <span class="absolute -top-1 -right-1 badge badge-xs badge-success">✓</span>
-                  )}
-                </BetterButton>
-              );
-            })}
+            {availableIcons.value.map((iconName) => (
+              <IconButton
+                key={iconName}
+                icon={iconName}
+                isSelected={isIconSelected(iconName)}
+                onClick$={() => handleIconToggle(iconName)}
+                size={20}
+              />
+            ))}
           </div>
           
           {props.maxLinks && (
