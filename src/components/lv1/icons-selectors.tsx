@@ -1,4 +1,4 @@
-import { component$, useSignal, useComputed$ } from '@builder.io/qwik';
+import { component$, useSignal, useComputed$, $ } from '@builder.io/qwik';
 import { Icon } from '../basics/icons';
 import { iconRegistry } from '../icons-registry/icons.data';
 import { type IconName } from '../icons-registry/icons.types';
@@ -42,9 +42,6 @@ export const IconButton = component$<{
 
 export const IconSelector = component$<IconSelectorProps>((props) => {
   const searchTerm = useSignal('');
-  const selectedForEditing = useSignal<number | null>(null);
-  const newUrl = useSignal('');
-  const newLabel = useSignal('');
 
   const availableIcons = useComputed$(() => {
     const icons = Object.keys(iconRegistry) as IconName[];
@@ -58,11 +55,11 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
     );
   });
 
-  const isIconSelected = (iconName: IconName) => {
+  const isIconSelected = $((iconName: IconName) => {
     return props.selectedLinks?.some(link => link.icon === iconName) ?? false;
-  };
+  });
 
-  const handleIconToggle = (iconName: IconName) => {
+  const handleIconToggle = $((iconName: IconName) => {
     const currentLinks = props.selectedLinks ?? [];
     
     if (isIconSelected(iconName)) {
@@ -78,20 +75,20 @@ export const IconSelector = component$<IconSelectorProps>((props) => {
       };
       props.onLinksChange?.([...currentLinks, newLink]);
     }
-  };
+  });
 
-  const handleLinkUpdate = (index: number, field: keyof SocialLink, value: string) => {
+  const handleLinkUpdate = $((index: number, field: keyof SocialLink, value: string) => {
     const currentLinks = props.selectedLinks ?? [];
     const updated = [...currentLinks];
     updated[index] = { ...updated[index], [field]: value };
     props.onLinksChange?.(updated);
-  };
+  });
 
-  const handleRemoveLink = (index: number) => {
+  const handleRemoveLink = $((index: number) => {
     const currentLinks = props.selectedLinks ?? [];
     const filtered = currentLinks.filter((_, i) => i !== index);
     props.onLinksChange?.(filtered);
-  };
+  });
 
   return (
     <div class="space-y-4">
