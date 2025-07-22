@@ -1,11 +1,4 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: {
-    silk: {
-      default: true,
-    },
-    dim: {
-      prefersdark: true,
-    },
-  };
+ themes: silk --default, dim --prefersdark; 
 }
