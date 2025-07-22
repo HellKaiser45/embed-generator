@@ -42,6 +42,9 @@ export const IconButton = component$<{
 
 export const IconSelector = component$<IconSelectorProps>((props) => {
   const searchTerm = useSignal('');
+  const selectedForEditing = useSignal<number | null>(null);
+  const newUrl = useSignal('');
+  const newLabel = useSignal('');
 
   const availableIcons = useComputed$(() => {
     const icons = Object.keys(iconRegistry) as IconName[];
