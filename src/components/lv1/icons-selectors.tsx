@@ -1,10 +1,14 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { Icon } from '../basics/icons';
 import { iconRegistry } from '../icons-registry/icons.data';
 import { type IconName } from '../icons-registry/icons.types';
 import BetterButton from '~/components/basics/button';
+import { SocialBannerContext } from "~/contexts/social-banner-context";
+
 
 export const IconSelector = component$(() => {
+  const state = useContext(SocialBannerContext);
+
 
   return (
     <ul class="list bg-base-100 rounded-box shadow-md">
