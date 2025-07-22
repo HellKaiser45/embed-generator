@@ -19,6 +19,7 @@ export const IconSelector = component$(() => {
               type="checkbox"
               checked={false}
               class="checkbox checkbox-primary peer absolute top-0 left-0 w-full h-full opacity-0"
+
             />
             <BetterButton class="peer-checked:bg-secondary">
               <span class="text-primary min-w-24 justify-start flex">{name} :</span>
