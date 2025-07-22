@@ -5,12 +5,7 @@ import { type IconName } from '../icons-registry/icons.types';
 import BetterButton from '~/components/basics/button';
 import { SocialBannerContext } from "~/contexts/social-banner-context";
 
-
-interface IconSelectorProps {
-  onChange$?: (iconName: IconName, checked: boolean) => void;
-}
-
-export const IconSelector = component$<IconSelectorProps>(({ onChange$ }) => {
+export const IconSelector = component$(() => {
   const state = useContext(SocialBannerContext);
 
 
@@ -21,8 +16,8 @@ export const IconSelector = component$<IconSelectorProps>(({ onChange$ }) => {
           <label class="relative flex items-center cursor-pointer">
             <input
               type="checkbox"
-              checked={state.selectedIcons.includes(name as IconName)}
-              onChange$={(_, el) => onChange$?.(name as IconName, el.checked)}
+              checked={state.socials.includes(name)}
+              onChange$={ }
               class="checkbox checkbox-primary peer absolute top-0 left-0 w-full h-full opacity-0"
             />
             <BetterButton class="peer-checked:bg-secondary">
