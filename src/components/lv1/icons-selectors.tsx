@@ -31,7 +31,6 @@ export const IconButton = component$<{
         isSelected ? "btn-primary" : "btn-ghost"
       ]}
       onClick$={onClick$}
-      title={isSelected ? "Remove" : "Add"}
     >
       <Icon name={icon} size={size} />
       {isSelected && (
