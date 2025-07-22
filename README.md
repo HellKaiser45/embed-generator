@@ -1,34 +1,10 @@
-# Qwik City App ⚡️
+# Qwik City static-site app with tailwind based ui ⚡️
 
 - [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+- [DaisyUI](https://daisyui.com/)
+- [tailwindcss](https://tailwindcss.com/docs/installation/using-vite)
 
 ---
-
-## Project Structure
-
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
-
-Inside your project, you'll see the following directory structure:
-
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
-```
-
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
-
-- `src/components`: Recommended directory for components.
-
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
 
 ## Add Integrations and deployment
 
@@ -57,6 +33,20 @@ bun preview # or `bun preview`
 ```
 
 ## Production
+
+```shell
+bun run qwik add static
+```
+
+Select Adapter: Static site (.html files). Done!
+
+The adapters/static/vite.config.ts file also includes the SSG config, which would be custom for each implementation.
+
+The URL origin, which is a combination of the scheme (protocol) and hostname (domain). For example, <https://qwik.dev> has the protocol https:// and domain qwik.dev. However, the origin does not include a pathname.
+
+The origin is used to provide a full URL during Static Site Generation (SSG), and to simulate a complete URL rather than just the pathname. For example, in order to render a correct canonical tag URL or URLs within the sitemap.xml, the origin must be provided too.
+
+If the site also starts with a pathname other than /, please use the base option in the Vite config options (the basePathname option in the Qwik City config options is deprecated).
 
 The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
 
