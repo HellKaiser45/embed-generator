@@ -5,7 +5,7 @@ import type { IconProps } from '~/components/icons-registry/icons.types';
 
 export const Icon = component$<{ name: IconName } & IconProps>(({ name, size = 24, ...props }) => {
   const path = iconRegistry[name];
-  
+
   if (!path) {
     console.warn(`Icon "${name}" not found`);
     return <FallbackIcon size={size} {...props} />;
