@@ -21,9 +21,9 @@ export const IconSelector = component$<IconSelectorProps>(({ onChange$ }) => {
           <label class="relative flex items-center cursor-pointer">
             <input
               type="checkbox"
-              checked={false}
+              checked={state.selectedIcons.includes(name as IconName)}
+              onChange$={(_, el) => onChange$?.(name as IconName, el.checked)}
               class="checkbox checkbox-primary peer absolute top-0 left-0 w-full h-full opacity-0"
-
             />
             <BetterButton class="peer-checked:bg-secondary">
               <span class="text-primary min-w-24 justify-start flex">{name} :</span>
