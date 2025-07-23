@@ -5,7 +5,7 @@ import { SocialBannerContext, SocialBannerContextType, UrlSocialBannerContext } 
 import { FlexibleCard } from "~/components/basics/flexible-card";
 import { ColorInput } from "~/components/basics/color-input";
 import { SizeInput } from "~/components/basics/size-input";
-import { compressAndLogState } from "~/utils/sharedfncs";
+import { compressAndLogState, buildTransparentIframe } from "~/utils/sharedfncs";
 import { UrlCopy } from "~/components/basics/url-copy";
 
 export default component$(() => {
@@ -36,7 +36,7 @@ export default component$(() => {
 
   return (
     <>
-      <div class="flex items-center justify-center gap-4 p-4 font-mono">
+      <div class="flex items-start justify-center gap-4 p-4 font-mono ">
         <FlexibleCard title="Icons" description="Select your icons">
           <div class="space-y-2 w-80">
             <div class="flex  gap-4">
@@ -74,6 +74,7 @@ export default component$(() => {
         <FlexibleCard title="Preview" description="Preview and copy your banner">
           <UrlCopy content={location.url + 'ui?state=' + urlstate.value} />
           <hr class="w-full border-base-200 my-2" />
+          <UrlCopy content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, 1000, 500)} />
 
 
         </FlexibleCard>
