@@ -1,11 +1,22 @@
 //basic custom daisyui compoonent for color picker
 import { component$ } from "@builder.io/qwik";
 
+interface ColorInputProps {
+  value?: string;
+  onChange$?: (color: string) => void;
+  [key: string]: any; // allow any other native input attributes
+}
 
-export const ColorInput = component$(
-  () => {
+export const ColorInput = component$<ColorInputProps>(
+  (props) => {
     return (
-      <input type="color" class="h-6 w-6" />
-
-    )
-  })
+      <input
+        type="color"
+        class="h-6 w-6"
+        value={props.value ?? '#000000'}
+        onInput$={(ev) => props.onChange$?.((ev.target as HTMLInputElement).value)}
+        {...props}
+      />
+    );
+  }
+);
