@@ -16,8 +16,13 @@ export default component$(() => {
   useContextProvider(SocialBannerContext, StateContext);
   const state = useContext(SocialBannerContext);
   useTask$(({ track }) => {
-    const nexstate = track(state);
-    console.log(nexstate);
+    const nextState = track(state);
+    console.log('Social Banner State:', {
+      iconColor: nextState['icons-color'],
+      iconSize: nextState['icons-size'],
+      socialsCount: nextState.socials.length,
+      socials: nextState.socials
+    });
   })
 
 
@@ -36,5 +41,3 @@ export default component$(() => {
     </>
   );
 });
-
-
