@@ -3,7 +3,7 @@ import { component$, type QRL } from "@builder.io/qwik";
 
 interface ColorInputProps {
   value?: string;
-  onChange$?: QRL<(color: string) => void>;
+  onColorChange$?: QRL<(color: string) => void>;
   [key: string]: any; // allow any other native input attributes
 }
 
@@ -14,7 +14,7 @@ export const ColorInput = component$<ColorInputProps>(
         type="color"
         class="h-6 w-6"
         value={props.value ?? '#000000'}
-        onInput$={(ev) => props.onChange$?.((ev.target as HTMLInputElement).value)}
+        onInput$={(ev) => props.onColorChange$?.((ev.target as HTMLInputElement).value)}
         {...props}
       />
     );
