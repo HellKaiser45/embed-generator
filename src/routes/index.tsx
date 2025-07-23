@@ -3,13 +3,15 @@ import IconSelector from "~/components/lv1/icons-selectors";
 import { SocialBannerContext } from "~/contexts/social-banner-context";
 import { FlexibleCard } from "~/components/basics/flexible-card";
 import { ColorInput } from "~/components/basics/color-input";
+import { SizeInput } from "~/components/basics/size-input";
 
 export default component$(() => {
 
   const StateContext = useStore(
     {
-      'icons-color': 'fill-primary',
-      'icons-size': 24,
+      'iconsColor': 'fill-primary',
+      'iconsSize': '24',
+      'BgColor': '#000000',
       'socials': []
     });
 
@@ -18,22 +20,49 @@ export default component$(() => {
   useTask$(({ track }) => {
     const nextState = track(state);
     console.log('Social Banner State:', {
-      iconColor: nextState['icons-color'],
-      iconSize: nextState['icons-size'],
+      iconColor: nextState.iconsColor,
+      iconSize: nextState.iconsSize,
+      bgColor: nextState.BgColor,
       socialsCount: nextState.socials.length,
       socials: nextState.socials
     });
   })
 
-
   return (
     <>
-      <div class="flex flex-col items-center justify-center gap-4 p-4">
+      <div class="flex flex-col items-center justify-center gap-4 p-4 font-mono">
         <FlexibleCard title="Icons" description="Select your icons">
-          <ColorInput onColorChange={$((color: string) => {
-            state["icons-color"] = color;
-          })
-          } />
+          <div class="space-y-2 mb-4">
+            <div class="flex flex-row items-center gap-4">
+              <span class="min-w-24">Icons size</span>
+              <SizeInput onSizeChange={$((size: string) => {
+                state.iconsSize = size;
+
+              })} />
+            </div>
+
+
+            <div class="flex flex-row items-center gap-4 ">
+              <span class="min-w-24">Button color</span>
+              <ColorInput onColorChange={$((color: string) => {
+                state.iconsColor = color;
+              })
+              } />
+            </div>
+
+
+            <div class="flex flex-row items-center gap-4">
+              <span class="min-w-24">Icons color</span>
+              <ColorInput onColorChange={$((color: string) => {
+                state.iconsColor = color;
+              })
+              } />
+            </div>
+
+
+          </div>
+          <hr class="w-full border-base-200 my-2" />
+          <p class="underline" > Select your socials</p>
           <IconSelector />
         </FlexibleCard>
       </div>

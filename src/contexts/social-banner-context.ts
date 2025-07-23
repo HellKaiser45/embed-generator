@@ -7,8 +7,9 @@ export interface SocialType {
 }
 
 export interface SocialBannerContextType {
-  'icons-color': string;
-  'icons-size': number;
+  'iconsColor': string;
+  'BgColor': string;
+  'iconsSize': string;
   'socials': SocialType[];
 }
 export const SocialBannerContext = createContextId<SocialBannerContextType>('social-banner-context');
