@@ -13,7 +13,7 @@ export const IconSelector = component$(() => {
       {Object.entries(iconRegistry).map(([name, _]) => {
         const isSelected = state.socials.some(social => social.name === name);
         const socialIndex = state.socials.findIndex(social => social.name === name);
-        
+
         return (
           <li class="list-row" key={name}>
             <label class="relative flex items-center cursor-pointer">
@@ -23,7 +23,7 @@ export const IconSelector = component$(() => {
                 onChange$={() => {
                   const newSocials = [...state.socials];
                   const index = newSocials.findIndex(social => social.name === name);
-                  
+
                   if (index >= 0) {
                     // Remove if unchecked
                     newSocials.splice(index, 1);
@@ -43,31 +43,48 @@ export const IconSelector = component$(() => {
                   <span class="text-primary min-w-24 justify-start flex">{name} :</span>
                   <Icon name={name as IconName} />
                 </BetterButton>
-                
+
                 {isSelected && (
-                  <div class="mt-2">
-                    <input
-                      type="text"
-                      placeholder={`Enter ${name} link...`}
-                      value={state.socials[socialIndex]?.link || ''}
-                      onInput$={(e: Event) => {
-                        const target = e.target as HTMLInputElement;
-                        const newSocials = [...state.socials];
-                        const index = newSocials.findIndex(social => social.name === name);
-                        if (index >= 0) {
-                          newSocials[index] = {
-                            ...newSocials[index],
-                            link: target.value
-                          };
-                          state.socials = newSocials;
-                        }
-                      }}
-                      class="input input-bordered input-sm w-full"
-                    />
-                  </div>
+                  <>
+                    <label class="mt-2 input validator">
+                      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g
+                          stroke-linejoin="round"
+                          stroke-linecap="round"
+                          stroke-width="2.5"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </g>
+                      </svg>
+                      <input
+                        type="url"
+                        placeholder="https://"
+                        pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
+                        title='Must be a vaild link'
+                        value={state.socials[socialIndex]?.link || ''}
+                        onInput$={(e: Event) => {
+                          const target = e.target as HTMLInputElement;
+                          const newSocials = [...state.socials];
+                          const index = newSocials.findIndex(social => social.name === name);
+                          if (index >= 0) {
+                            newSocials[index] = {
+                              ...newSocials[index],
+                              link: target.value
+                            };
+                            state.socials = newSocials;
+                          }
+                        }}
+                      />
+                    </label >
+                    <p class="validator-hint">Must be a valid link</p>
+                  </>
                 )}
               </div>
             </label>
+
           </li>
         );
       })}
