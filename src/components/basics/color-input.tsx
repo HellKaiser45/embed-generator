@@ -1,9 +1,9 @@
 //basic custom daisyui compoonent for color picker
-import { component$ } from "@builder.io/qwik";
+import { component$, type QRL } from "@builder.io/qwik";
 
 interface ColorInputProps {
   value?: string;
-  onChange$?: (color: string) => void;
+  onChange$?: QRL<(color: string) => void>;
   [key: string]: any; // allow any other native input attributes
 }
 
