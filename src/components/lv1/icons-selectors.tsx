@@ -46,10 +46,10 @@ export const IconSelector = component$(() => {
                 <div class="mt-2 w-full max-w-[200px]">
                   <input
                     type="url"
-                    placeholder="Link"
+                    placeholder="https://"
                     pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
                     title='Must be a valid link'
-                    value={state.socials[socialIndex]?.link || ''}
+                    value={state.socials[socialIndex]?.link || 'https://'}
                     onInput$={(e: Event) => {
                       const target = e.target as HTMLInputElement;
                       const newSocials = [...state.socials];
