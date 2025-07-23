@@ -16,8 +16,18 @@ export const IconSelector = component$(() => {
           <label class="relative flex items-center cursor-pointer">
             <input
               type="checkbox"
-              checked={state.socials.includes(name)}
-              onChange$={ }
+              checked={state.socials.some(social => social.name === name)}
+              onChange$={() => {
+
+                const newSocials = [...state.socials];
+                const index = newSocials.findIndex(social => social.name === name);
+                newSocials.splice(index, 1);
+                newSocials.push({
+                  name,
+                  link: ''
+                });
+                state.socials = newSocials;
+              }}
               class="checkbox checkbox-primary peer absolute top-0 left-0 w-full h-full opacity-0"
             />
             <BetterButton class="peer-checked:bg-secondary">
