@@ -9,7 +9,7 @@ export const IconSelector = component$(() => {
   const state = useContext(SocialBannerContext);
 
   return (
-    <ul class="list bg-base-100 rounded-box shadow-md max-w-fit">
+    <ul class="list bg-base-100 rounded-box shadow-md w-fit">
       {Object.entries(iconRegistry).map(([name, _]) => {
         const isSelected = state.socials.some(social => social.name === name);
         const socialIndex = state.socials.findIndex(social => social.name === name);
@@ -43,13 +43,13 @@ export const IconSelector = component$(() => {
               </label>
               
               {isSelected && (
-                <div class="mt-2 w-full">
+                <div class="mt-2 w-full max-w-[200px]">
                   <input
                     type="url"
-                    placeholder="https://"
+                    placeholder="Link"
                     pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
                     title='Must be a valid link'
-                    value={state.socials[socialIndex]?.link || 'https://'}
+                    value={state.socials[socialIndex]?.link || ''}
                     onInput$={(e: Event) => {
                       const target = e.target as HTMLInputElement;
                       const newSocials = [...state.socials];
