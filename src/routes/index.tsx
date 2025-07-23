@@ -1,4 +1,4 @@
-import { component$, useContextProvider, useStore, useContext, $ } from "@builder.io/qwik";
+import { component$, useContextProvider, useStore, useContext, $, useTask$ } from "@builder.io/qwik";
 import IconSelector from "~/components/lv1/icons-selectors";
 import { SocialBannerContext } from "~/contexts/social-banner-context";
 import { FlexibleCard } from "~/components/basics/flexible-card";
@@ -15,6 +15,10 @@ export default component$(() => {
 
   useContextProvider(SocialBannerContext, StateContext);
   const state = useContext(SocialBannerContext);
+  useTask$(({ track }) => {
+    const nexstate = track(state);
+    console.log(nexstate);
+  })
 
 
   return (
