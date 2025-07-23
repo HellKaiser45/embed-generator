@@ -1,5 +1,5 @@
 // qwik context for social banner
-import { createContextId, useContext } from '@builder.io/qwik';
+import { Signal, createContextId } from '@builder.io/qwik';
 
 export interface SocialType {
   'name': string;
@@ -13,6 +13,4 @@ export interface SocialBannerContextType {
   'socials': SocialType[];
 }
 export const SocialBannerContext = createContextId<SocialBannerContextType>('social-banner-context');
-
-export const useSocialBannerContext = () =>
-  useContext(SocialBannerContext);
+export const UrlSocialBannerContext = createContextId<Signal<string>>('url-social-banner-context');

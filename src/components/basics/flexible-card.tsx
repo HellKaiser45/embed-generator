@@ -10,7 +10,7 @@ export const FlexibleCard = component$<FlexibleCardProps>(
   (props) => {
     return (
       <>
-        <div class="card bg-base-100 border border-base-300">
+        <div class="card bg-base-100 border border-base-300 w-auto">
 
           <div class="card-body">
             <h2 class="card-title">{props.title ?? ""}</h2>

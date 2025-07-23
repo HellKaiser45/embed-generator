@@ -9,7 +9,7 @@ export const IconSelector = component$(() => {
   const state = useContext(SocialBannerContext);
 
   return (
-    <ul class="list bg-base-100 rounded-box shadow-md">
+    <ul class="list bg-base-100 rounded-box shadow-md max-h-[320px] overflow-y-auto">
       {Object.entries(iconRegistry).map(([name, _]) => {
         const isSelected = state.socials.some(social => social.name === name);
         const socialIndex = state.socials.findIndex(social => social.name === name);

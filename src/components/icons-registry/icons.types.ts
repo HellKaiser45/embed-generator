@@ -1,6 +1,6 @@
 export type IconName = keyof typeof import('./icons.data').iconRegistry;
 
 export interface IconProps {
-  size?: number;
+  size?: string;
   class?: string;
 }
