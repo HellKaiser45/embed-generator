@@ -15,7 +15,6 @@ export default component$(() => {
     ? decompressState<SocialBannerContextType>(compressed)
     : null;
 
-  console.log('decompressed state:', decompressed);
 
   // mark this route so the global CSS can target it
   useVisibleTask$(() => {
@@ -23,24 +22,29 @@ export default component$(() => {
   });
 
   return (
-    <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
-      {decompressed && (
-        <>
-          {decompressed.socials.map((social, i) => (
-            <Button
-              key={i}
-              class="aspect-square"
-              style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}
-            >
-              <Icon
-                name={social.name as IconName}
-                size={decompressed.iconsSize}
-                style={{ fill: decompressed.iconsColor }}
-              />
-            </Button>
-          ))}
-        </>
-      )}
-    </div>
+    <>
+      <style>{`                                                       
+         html, body { background: transparent !important; }            
+       `}</style>
+      <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
+        {decompressed && (
+          <>
+            {decompressed.socials.map((social, i) => (
+              <Button
+                key={i}
+                class="aspect-square"
+                style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}
+              >
+                <Icon
+                  name={social.name as IconName}
+                  size={decompressed.iconsSize}
+                  style={{ fill: decompressed.iconsColor }}
+                />
+              </Button>
+            ))}
+          </>
+        )}
+      </div>
+    </>
   );
 });
