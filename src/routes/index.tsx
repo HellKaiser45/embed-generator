@@ -111,7 +111,7 @@ export default component$(() => {
           <FlexibleCard
             title="Live Preview"
             description="See your banner in real-time"
-            class="bg-base-100 shadow-xl border border-base-300"
+            class="bg-base-100 shadow-xl border border-base-300 block"
           >
 
             {/* Preview Area */}
