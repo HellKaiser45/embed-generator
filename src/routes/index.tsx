@@ -57,7 +57,7 @@ export default component$(() => {
           <FlexibleCard
             title="Configuration"
             description="Customize your banner appearance"
-            class="bg-base-100 shadow-xl border border-base-300 lg:col-span-1"
+            class="bg-base-100 shadow-xl border border-base-300  lg:col-span-1"
           >
             <div class="space-y-6">
               {/* Settings Section */}
@@ -111,7 +111,7 @@ export default component$(() => {
           <FlexibleCard
             title="Live Preview"
             description="See your banner in real-time"
-            class="bg-base-100 shadow-xl border border-base-300 lg:col-span-2"
+            class="bg-base-100 shadow-xl border border-base-300 block lg:col-span-2"
           >
 
             {/* Preview Area */}
