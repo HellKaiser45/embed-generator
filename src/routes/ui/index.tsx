@@ -15,7 +15,6 @@ export default component$(() => {
     ? decompressState<SocialBannerContextType>(compressed)
     : null;
 
-
   // mark this route so the global CSS can target it
   useVisibleTask$(() => {
     document.documentElement.setAttribute('data-route', 'ui');
@@ -23,9 +22,7 @@ export default component$(() => {
 
   return (
     <>
-      <style>{`                                                       
-         html, body { background: transparent !important; }            
-       `}</style>
+      <style dangerouslySetInnerHTML="html,body{background:transparent!important}" />
       <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
         {decompressed && (
           <>
