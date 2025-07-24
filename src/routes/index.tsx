@@ -44,11 +44,11 @@ export default component$(() => {
 
   return (
     <>
-      <div class="flex items-start justify-center gap-4 p-4 font-mono ">
+      <div class="flex flex-wrap items-start justify-center gap-4 p-4 font-mono max-w-screen">
         <FlexibleCard title="Icons" description="Select your icons">
           <div class="space-y-2 w-fit">
             {/* //issue only this icon size input causes the card to be larger than needed if i comment the card fit correctly */}
-            <div class="flex  gap-4">
+            <div class="flex flex-wrap  gap-4">
               <span class="min-w-24">Icons size</span>
               <SizeInput onSizeChange={$((size: string) => {
                 state.iconsSize = size;
