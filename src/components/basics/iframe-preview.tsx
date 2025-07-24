@@ -1,14 +1,24 @@
 // an iframe preview component for Qwik to display 
 import { component$ } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city"};
+import { buildTransparentIframe } from "~/utils/sharedfncs";
 
-export const IframePreview = component$(() => {
-  const location = useLocation();
+interface IframePreviewProps {
+  url: string;
+  width?: number | string;
+  height?: number | string;
+}
+
+
+export const IframePreview = component$<IframePreviewProps>(({ url, width = 320, height = 180 }) => {
+
+
+  const iframeCode = buildTransparentIframe(url, width, height);
+
+
   return (
-    <iframe
-      src={location.href}
-      title="Iframe Preview"
-      style={{ width: "100%", height: "100%" }}
-    />
+    <div class="car bg-base-100 shadow-xl border border-base-300 w-fit">
+      <div dangerouslySetInnerHTML={iframeCode} />
+    </div>
+
   );
 });

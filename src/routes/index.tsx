@@ -7,7 +7,7 @@ import { ColorInput } from "~/components/basics/color-input";
 import { SizeInput } from "~/components/basics/size-input";
 import { compressAndLogState, buildTransparentIframe } from "~/utils/sharedfncs";
 import { UrlCopy } from "~/components/basics/url-copy";
-
+import { IframePreview } from "~/components/basics/iframe-preview";
 export default component$(() => {
 
   const location = useLocation();
@@ -51,7 +51,7 @@ export default component$(() => {
             <div class="flex gap-4 ">
               <span class="min-w-24">Button color</span>
               <ColorInput onColorChange={$((color: string) => {
-                state.iconsColor = color;
+                state.BgColor = color;
               })
               } />
             </div>
@@ -72,6 +72,7 @@ export default component$(() => {
         </FlexibleCard>
 
         <FlexibleCard title="Preview" description="Preview and copy your banner">
+          <IframePreview url={location.url + 'ui?state=' + urlstate.value} />
           <UrlCopy content={location.url + 'ui?state=' + urlstate.value} />
           <hr class="w-full border-base-200 my-2" />
           <UrlCopy content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, 1000, 500)} />

@@ -20,7 +20,7 @@ export default component$(() => {
   console.log('decompressed state:', decompressed);
 
   return (
-    <div class="flex items-center justify-center gap-4 font-mono">
+    <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
       {decompressed && (
         <>
           {

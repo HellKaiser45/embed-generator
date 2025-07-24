@@ -9,7 +9,7 @@ interface ButtonProps {
 export default component$<ButtonProps>(({ class: className, onClick$, ...props }) => {
   return (
     <button
-      class={['btn btn-outline h-fit min-h-8', className]}
+      class={['btn h-fit min-h-8', className]}
       onClick$={onClick$}
       {...props}
     >
