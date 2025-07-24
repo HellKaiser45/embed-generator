@@ -16,7 +16,7 @@ export const SizeInput = component$<SizeInputProps>(
           value={props.value ?? '24'}
           onInput$={(ev) => props.onSizeChange((ev.target as HTMLInputElement).value)}
           {...props}
-          class="input validator w-20 "
+          class="input input-sm w-fit validator"
           min="16"
           max="64"
           title="Icon size must be between 16 and 64"
