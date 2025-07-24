@@ -1,20 +1,24 @@
 import { component$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
-import { decompressState } from "~/utils/compressState"; import { decompressState } from "~/utils/compressState";
+import { decompressState } from "~/utils/sharedfncs";
+import { SocialBannerContextType } from "~/contexts/social-banner-context";
+import Button from "~/components/basics/button";
 
 
 
 export default component$(() => {
   const location = useLocation();
 
-  const decompressedParams = decompressState(location.params)
+  const decompressedParams = decompressState<SocialBannerContextType>(location.url.searchParams.get("state") ?? "");
+  console.log(decompressedParams)
 
 
   return (
     <div class="flex flex-col items-center justify-center gap-4 p-4 font-mono">
-      <h1>Qwik UI</h1>
-      <p>This is a Qwik UI app.</p>
-      <p>Visits: {location.data.count}</p>
+      <Button>Click me</Button>
+
+
+
     </div>
   );
 });

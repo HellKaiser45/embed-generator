@@ -50,7 +50,7 @@ export const UrlCopy = component$<UrlCopyProps>(
               try {
                 document.execCommand('copy');
                 copied.value = true;
-              } catch {}
+              } catch { }
               document.body.removeChild(textArea);
             }
           }}
