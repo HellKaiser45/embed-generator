@@ -16,7 +16,7 @@ export const IframePreview = component$<IframePreviewProps>(({ url, width = 320,
 
 
   return (
-    <div class="car bg-base-100 shadow-xl border border-base-300 w-fit">
+    <div class="card bg-base-100 shadow-xl border border-base-300">
       <div dangerouslySetInnerHTML={iframeCode} />
     </div>
 

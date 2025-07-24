@@ -20,12 +20,12 @@ export default component$(() => {
   console.log('decompressed state:', decompressed);
 
   return (
-    <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
+    <div class="flex h-screen items-center bg-transparent justify-center gap-4 self-center flex-wrap">
       {decompressed && (
         <>
           {
             decompressed.socials.map((social, i) => (
-              <Button key={i} style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}>
+              <Button key={i} class="aspect-square" style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}>
                 <Icon name={social.name as IconName} size={decompressed.iconsSize} style={{ fill: decompressed.iconsColor }} />
               </Button>
             ))
