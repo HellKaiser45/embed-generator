@@ -1,4 +1,4 @@
-import { component$, useContextProvider, useStore, useContext, $, useTask$, useSignal } from "@builder.io/qwik";
+import { component$, useContextProvider, useStore, useContext, $, useTask$, useSignal, useComputed$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import IconSelector from "~/components/lv1/icons-selectors";
 import { SocialBannerContext, SocialBannerContextType, UrlSocialBannerContext } from "~/contexts/social-banner-context";
@@ -10,14 +10,13 @@ import { UrlCopy } from "~/components/basics/url-copy";
 import { IframePreview } from "~/components/basics/iframe-preview";
 
 //function to calculate iframe dimesions based on the number of icons and the size of the icons
-function calculateiframeSize(icons: number, size: number) {
+const calculateiframeSize = (icons: number, size: number) => {
   const width = (icons) * (size + 66);
   const height = size + 66;
   return { 'width': width, 'height': height };
-}
+};
 
 export default component$(() => {
-
   const location = useLocation();
 
   const StateContext = useStore(
@@ -29,14 +28,13 @@ export default component$(() => {
     });
   const StateUrl = useSignal("")
 
-
   useContextProvider(SocialBannerContext, StateContext);
   useContextProvider(UrlSocialBannerContext, StateUrl);
 
   const state = useContext(SocialBannerContext);
   const urlstate = useContext(UrlSocialBannerContext);
 
-  const dimesions = calculateiframeSize(state.socials.length, parseInt(state.iconsSize));
+  const dimesions = useComputed$(() => calculateiframeSize(state.socials.length, parseInt(state.iconsSize)));
 
   useTask$(({ track }) => {
     const nextState = track(state);
@@ -53,28 +51,22 @@ export default component$(() => {
               <span class="min-w-24">Icons size</span>
               <SizeInput onSizeChange={$((size: string) => {
                 state.iconsSize = size;
-
               })} />
             </div>
-
 
             <div class="flex gap-4 ">
               <span class="min-w-24">Button color</span>
               <ColorInput onColorChange={$((color: string) => {
                 state.BgColor = color;
-              })
-              } />
+              })} />
             </div>
-
 
             <div class="flex gap-4">
               <span class="min-w-24">Icons color</span>
               <ColorInput onColorChange={$((color: string) => {
                 state.iconsColor = color;
-              })
-              } />
+              })} />
             </div>
-
           </div>
           <hr class="w-full border-base-200 my-2 " />
           <p class="underline" > Select your socials</p>
@@ -82,13 +74,12 @@ export default component$(() => {
         </FlexibleCard>
 
         <FlexibleCard title="Preview" description="Preview and copy your banner">
-          <IframePreview url={location.url + 'ui?state=' + urlstate.value} width={dimesions.width} height={dimesions.height} />
+          <IframePreview url={location.url + 'ui?state=' + urlstate.value} width={dimesions.value.width} height={dimesions.value.height} />
           <UrlCopy content={location.url + 'ui?state=' + urlstate.value} />
           <hr class="w-full border-base-200 my-2" />
-          <UrlCopy content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimesions.width, dimesions.height)} />
+          <UrlCopy content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimesions.value.width, dimesions.value.height)} />
         </FlexibleCard>
       </div>
-
     </>
   );
 });
