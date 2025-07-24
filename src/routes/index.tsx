@@ -64,7 +64,7 @@ export default component$(() => {
               <div class="space-y-6">
                 <h3 class="text-xl font-bold text-base-content mb-4">Appearance Settings</h3>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-5">
+                <div class="space-y-5">
                   {/* Icon Size */}
                   <div class="flex flex-col space-y-2">
                     <label class="text-base font-semibold text-base-content">Icon Size</label>
