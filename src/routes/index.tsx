@@ -113,37 +113,37 @@ export default component$(() => {
             description="See your banner in real-time"
             class="bg-base-100 shadow-xl border border-base-300"
           >
-            <div class="space-y-6">
-              {/* Preview Area */}
-              <div class="transform scale-90 sm:scale-100 transition-transform">
-                <IframePreview
-                  url={location.url + 'ui?state=' + urlstate.value}
-                  width={dimensions.value.width}
-                  height={dimensions.value.height}
+
+            {/* Preview Area */}
+            <div class="transform scale-90 sm:scale-100 transition-transform">
+              <IframePreview
+                url={location.url + 'ui?state=' + urlstate.value}
+                width={dimensions.value.width}
+                height={dimensions.value.height}
+              />
+            </div>
+
+            {/* Copy URLs */}
+            <div class="space-y-3">
+              <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
+
+              <div class="space-y-2">
+                <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
+                <UrlCopy
+                  content={location.url + 'ui?state=' + urlstate.value}
+                  class="w-full"
+                  title="Copy direct URL"
+                />
+
+                <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
+                <UrlCopy
+                  content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
+                  class="w-full"
+                  title="Copy embed code"
                 />
               </div>
-
-              {/* Copy URLs */}
-              <div class="space-y-3">
-                <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
-
-                <div class="space-y-2">
-                  <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
-                  <UrlCopy
-                    content={location.url + 'ui?state=' + urlstate.value}
-                    class="w-full"
-                    title="Copy direct URL"
-                  />
-
-                  <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
-                  <UrlCopy
-                    content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
-                    class="w-full"
-                    title="Copy embed code"
-                  />
-                </div>
-              </div>
             </div>
+
           </FlexibleCard>
         </div>
 
