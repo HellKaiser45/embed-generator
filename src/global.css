@@ -3,11 +3,12 @@
  themes: silk --default, dim --prefersdark; 
 }
 
-
 /* Force transparent background in specific embedding contexts */
 .notion-frame iframe, 
 .theme-doc-markdown iframe,
-.docusaurus iframe {
+.docusaurus iframe,
+[data-route="ui"] body,
+[data-route="ui"] html {
   background: transparent !important;
   color-scheme: light dark !important;
 }
@@ -15,12 +16,9 @@
 /* Reset any default padding/margins */
 .notion-frame, 
 .theme-doc-markdown,
-.docusaurus {
+.docusaurus,
+[data-route="ui"] body,
+[data-route="ui"] html {
   padding: 0 !important;
   margin: 0 !important;
-}
-
-iframe {
-  background: transparent !important;
-  color-scheme: light dark !important;
 }

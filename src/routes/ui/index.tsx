@@ -1,12 +1,10 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useVisibleTask$ } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
 import { decompressState } from '~/utils/sharedfncs';
 import Button from '~/components/basics/button';
 import { SocialBannerContextType } from '~/contexts/social-banner-context';
 import { Icon } from '~/components/basics/icons';
 import type { IconName } from '~/components/icons-registry/icons.types';
-
-
 
 export default component$(() => {
   const location = useLocation();
@@ -19,17 +17,28 @@ export default component$(() => {
 
   console.log('decompressed state:', decompressed);
 
+  // mark this route so the global CSS can target it
+  useVisibleTask$(() => {
+    document.documentElement.setAttribute('data-route', 'ui');
+  });
+
   return (
-    <div class="flex h-screen items-center bg-transparent justify-center gap-4 self-center flex-wrap">
+    <div class="flex h-screen items-center justify-center gap-4 self-center flex-wrap">
       {decompressed && (
         <>
-          {
-            decompressed.socials.map((social, i) => (
-              <Button key={i} class="aspect-square" style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}>
-                <Icon name={social.name as IconName} size={decompressed.iconsSize} style={{ fill: decompressed.iconsColor }} />
-              </Button>
-            ))
-          }
+          {decompressed.socials.map((social, i) => (
+            <Button
+              key={i}
+              class="aspect-square"
+              style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}
+            >
+              <Icon
+                name={social.name as IconName}
+                size={decompressed.iconsSize}
+                style={{ fill: decompressed.iconsColor }}
+              />
+            </Button>
+          ))}
         </>
       )}
     </div>
