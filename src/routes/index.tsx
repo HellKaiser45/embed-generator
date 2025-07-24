@@ -64,10 +64,10 @@ export default component$(() => {
               <div class="space-y-6">
                 <h3 class="text-xl font-bold text-base-content mb-4">Appearance Settings</h3>
 
-                <div class="space-y-5">
+                <div class="space-y-4">
                   {/* Icon Size */}
-                  <div class="flex flex-col space-y-2">
-                    <label class="text-base font-semibold text-base-content">Icon Size</label>
+                  <div class="flex items-center gap-4">
+                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Icon Size</label>
                     <SizeInput
                       onSizeChange={$((size: string) => {
                         state.iconsSize = size;
@@ -76,8 +76,8 @@ export default component$(() => {
                   </div>
 
                   {/* Background */}
-                  <div class="flex flex-col space-y-2">
-                    <label class="text-base font-semibold text-base-content">Background</label>
+                  <div class="flex items-center gap-4">
+                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Background</label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.BgColor = color;
@@ -86,8 +86,8 @@ export default component$(() => {
                   </div>
 
                   {/* Icon Color */}
-                  <div class="flex flex-col space-y-2">
-                    <label class="text-base font-semibold text-base-content">Icon Color</label>
+                  <div class="flex items-center gap-4">
+                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Icon Color</label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.iconsColor = color;
