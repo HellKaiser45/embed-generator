@@ -3,16 +3,17 @@ import { component$, useSignal, useTask$ } from '@builder.io/qwik';
 export interface UrlCopyProps {
   content: string;
   class?: string;
+  title?: string;
 }
 
 export const UrlCopy = component$<UrlCopyProps>(
-  ({ content, class: extraClass = '' }) => {
+  ({ content, class: extraClass = '', title = 'Copy' }) => {
     const copied = useSignal(false);
 
     useTask$(({ track }) => {
       track(() => copied.value);
       if (copied.value) {
-        const t = setTimeout(() => (copied.value = false), 2000);
+        const t = setTimeout(() => (copied.value = false), 1500);
         return () => clearTimeout(t);
       }
     });
@@ -20,43 +21,64 @@ export const UrlCopy = component$<UrlCopyProps>(
     return (
       <div
         class={[
-          'relative card bg-base-200 border border-base-300 rounded-box',
+          'relative bg-base-200 border border-base-300 rounded-md',
           'w-full max-w-md mx-auto',
+          'group',
           extraClass,
         ]}
       >
-        {/* subtle copy button */}
+        {/* Subtle copy button - only visible on hover */}
         <button
           type="button"
           class={[
-            'absolute top-2 right-2 btn btn-xs btn-circle btn-ghost',
-            'opacity-60 hover:opacity-100 hover:ring-2 hover:ring-primary',
+            'absolute top-1 right-1 btn btn-xs btn-circle btn-ghost',
+            'opacity-0 group-hover:opacity-60 hover:!opacity-100',
             'transition-opacity duration-200',
+            'z-10',
           ]}
-          aria-label="Copy to clipboard"
+          aria-label={title}
           onClick$={async () => {
-            await navigator.clipboard.writeText(content);
-            copied.value = true;
+            try {
+              await navigator.clipboard.writeText(content);
+              copied.value = true;
+            } catch (err) {
+              // Fallback for older browsers
+              const textArea = document.createElement('textarea');
+              textArea.value = content;
+              document.body.appendChild(textArea);
+              textArea.select();
+              try {
+                document.execCommand('copy');
+                copied.value = true;
+              } catch {}
+              document.body.removeChild(textArea);
+            }
           }}
         >
-          {copied.value ? '✅' : '📋'}
+          <span class="text-xs">{copied.value ? '✓' : '📋'}</span>
         </button>
 
-        {/* scrollable code block */}
-        <pre
-          class={[
-            'block text-sm font-mono text-base-content',
-            'p-4 pt-10 max-h-48 overflow-auto whitespace-pre-wrap break-words',
-          ]}
-        >
-          {content}
-        </pre>
+        {/* Scrollable content area - limited height */}
+        <div class="p-2">
+          <pre
+            class={[
+              'text-xs font-mono text-base-content',
+              'bg-transparent border-0 p-0 m-0',
+              'max-h-32 overflow-auto whitespace-pre-wrap break-all',
+              'scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-transparent',
+            ]}
+          >
+            {content}
+          </pre>
+        </div>
 
-        {/* inline toast */}
+        {/* Subtle success indicator - appears briefly */}
         {copied.value && (
-          <div class="alert alert-success py-1 px-2 mt-0 text-xs">
-            Copied to clipboard!
-          </div>
+          <div class={[
+            'absolute -top-1 -right-1',
+            'w-2 h-2 bg-success rounded-full',
+            'animate-ping',
+          ]}></div>
         )}
       </div>
     );
