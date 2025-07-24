@@ -61,14 +61,13 @@ export default component$(() => {
           >
             <div class="space-y-6">
               {/* Settings Section */}
-              <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-base-content">Appearance Settings</h3>
+              <div class="space-y-6">
+                <h3 class="text-xl font-bold text-base-content mb-4">Appearance Settings</h3>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div class="form-control">
-                    <label class="label">
-                      <span class="label-text font-medium">Icon Size</span>
-                    </label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-5">
+                  {/* Icon Size */}
+                  <div class="flex flex-col space-y-2">
+                    <label class="text-base font-semibold text-base-content">Icon Size</label>
                     <SizeInput
                       onSizeChange={$((size: string) => {
                         state.iconsSize = size;
@@ -76,10 +75,9 @@ export default component$(() => {
                     />
                   </div>
 
-                  <div class="form-control">
-                    <label class="label">
-                      <span class="label-text font-medium">Background</span>
-                    </label>
+                  {/* Background */}
+                  <div class="flex flex-col space-y-2">
+                    <label class="text-base font-semibold text-base-content">Background</label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.BgColor = color;
@@ -87,10 +85,9 @@ export default component$(() => {
                     />
                   </div>
 
-                  <div class="form-control">
-                    <label class="label">
-                      <span class="label-text font-medium">Icon Color</span>
-                    </label>
+                  {/* Icon Color */}
+                  <div class="flex flex-col space-y-2">
+                    <label class="text-base font-semibold text-base-content">Icon Color</label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.iconsColor = color;
@@ -126,13 +123,11 @@ export default component$(() => {
                 />
               </div>
 
-
               {/* Copy URLs */}
               <div class="space-y-3">
                 <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
 
                 <div class="space-y-2">
-
                   <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
                   <UrlCopy
                     content={location.url + 'ui?state=' + urlstate.value}
@@ -140,15 +135,12 @@ export default component$(() => {
                     title="Copy direct URL"
                   />
 
-
-
                   <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
                   <UrlCopy
                     content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
                     class="w-full"
                     title="Copy embed code"
                   />
-
                 </div>
               </div>
             </div>
