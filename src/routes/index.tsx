@@ -9,9 +9,8 @@ import { compressAndLogState, buildTransparentIframe } from "~/utils/sharedfncs"
 import { UrlCopy } from "~/components/basics/url-copy";
 import { IframePreview } from "~/components/basics/iframe-preview";
 
-//function to calculate iframe dimesions based on the number of icons and the size of the icons
 const calculateiframeSize = (icons: number, size: number) => {
-  const width = (icons) * (size + 66);
+  const width = Math.min((icons) * (size + 66), 600); // Cap max width
   const height = size + 66;
   return { 'width': width, 'height': height };
 };
@@ -19,13 +18,12 @@ const calculateiframeSize = (icons: number, size: number) => {
 export default component$(() => {
   const location = useLocation();
 
-  const StateContext = useStore(
-    {
-      'iconsColor': 'fill-primary',
-      'iconsSize': '24',
-      'BgColor': '#000000',
-      'socials': []
-    });
+  const StateContext = useStore({
+    'iconsColor': 'fill-primary',
+    'iconsSize': '24',
+    'BgColor': '#000000',
+    'socials': []
+  });
   const StateUrl = useSignal("")
 
   useContextProvider(SocialBannerContext, StateContext);
@@ -34,7 +32,7 @@ export default component$(() => {
   const state = useContext(SocialBannerContext);
   const urlstate = useContext(UrlSocialBannerContext);
 
-  const dimesions = useComputed$(() => calculateiframeSize(state.socials.length, parseInt(state.iconsSize)));
+  const dimensions = useComputed$(() => calculateiframeSize(state.socials.length, parseInt(state.iconsSize)));
 
   useTask$(({ track }) => {
     const nextState = track(state);
@@ -43,44 +41,126 @@ export default component$(() => {
   })
 
   return (
-    <>
-      <div class="flex flex-wrap items-start justify-center gap-4 p-4 font-mono max-w-screen">
-        <FlexibleCard title="Icons" description="Select your icons">
-          <div class="space-y-2 w-fit">
-            {/* //issue only this icon size input causes the card to be larger than needed if i comment the card fit correctly */}
-            <div class="flex flex-wrap  gap-4">
-              <span class="min-w-24">Icons size</span>
-              <SizeInput onSizeChange={$((size: string) => {
-                state.iconsSize = size;
-              })} />
-            </div>
+    <div class="min-h-screen bg-gradient-to-br from-base-100 to-base-200">
+      <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+          <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Social Banner Generator
+          </h1>
+          <p class="text-base-content/70 mt-2 text-lg">
+            Create beautiful social media banners for your projects
+          </p>
+        </header>
 
-            <div class="flex gap-4 ">
-              <span class="min-w-24">Button color</span>
-              <ColorInput onColorChange={$((color: string) => {
-                state.BgColor = color;
-              })} />
-            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+          {/* Configuration Card */}
+          <FlexibleCard 
+            title="Configuration" 
+            description="Customize your banner appearance"
+            class="bg-base-100 shadow-xl border border-base-300"
+          >
+            <div class="space-y-6">
+              {/* Settings Section */}
+              <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-base-content">Appearance Settings</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Icon Size</span>
+                    </label>
+                    <SizeInput 
+                      onSizeChange={$((size: string) => state.iconsSize = size)}
+                      class="input input-bordered w-full"
+                    />
+                  </div>
+                  
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Background</span>
+                    </label>
+                    <ColorInput 
+                      onColorChange={$((color: string) => state.BgColor = color)}
+                      class="w-full h-10"
+                    />
+                  </div>
+                  
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Icon Color</span>
+                    </label>
+                    <ColorInput 
+                      onColorChange={$((color: string) => state.iconsColor = color)}
+                      class="w-full h-10"
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <div class="flex gap-4">
-              <span class="min-w-24">Icons color</span>
-              <ColorInput onColorChange={$((color: string) => {
-                state.iconsColor = color;
-              })} />
-            </div>
-          </div>
-          <hr class="w-full border-base-200 my-2 " />
-          <p class="underline" > Select your socials</p>
-          <IconSelector />
-        </FlexibleCard>
+              <div class="divider"></div>
 
-        <FlexibleCard title="Preview" description="Preview and copy your banner">
-          <IframePreview url={location.url + 'ui?state=' + urlstate.value} width={dimesions.value.width} height={dimesions.value.height} />
-          <UrlCopy content={location.url + 'ui?state=' + urlstate.value} />
-          <hr class="w-full border-base-200 my-2" />
-          <UrlCopy content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimesions.value.width, dimesions.value.height)} />
-        </FlexibleCard>
+              {/* Icons Selection */}
+              <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-base-content">Select Social Icons</h3>
+                <IconSelector />
+              </div>
+            </div>
+          </FlexibleCard>
+
+          {/* Preview Card */}
+          <FlexibleCard 
+            title="Live Preview" 
+            description="See your banner in real-time"
+            class="bg-base-100 shadow-xl border border-base-300"
+          >
+            <div class="space-y-6">
+              {/* Preview Area */}
+              <div class="bg-base-200 rounded-lg p-4 flex justify-center">
+                <div class="transform scale-90 sm:scale-100 transition-transform">
+                  <IframePreview 
+                    url={location.url + 'ui?state=' + urlstate.value} 
+                    width={dimensions.value.width} 
+                    height={dimensions.value.height} 
+                    class="rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+
+              {/* Copy URLs */}
+              <div class="space-y-3">
+                <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
+                
+                <div class="space-y-2">
+                  <div class="p-3 bg-base-200 rounded-lg">
+                    <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
+                    <UrlCopy 
+                      content={location.url + 'ui?state=' + urlstate.value} 
+                      class="w-full"
+                      title="Copy direct URL"
+                    />
+                  </div>
+                  
+                  <div class="p-3 bg-base-200 rounded-lg">
+                    <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
+                    <UrlCopy 
+                      content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
+                      class="w-full"
+                      title="Copy embed code"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FlexibleCard>
+        </div>
+
+        {/* Footer */}
+        <footer class="text-center mt-12 text-base-content/60">
+          <p class="text-sm">
+            Built with ❤️ using Qwik and Tailwind CSS
+          </p>
+        </footer>
       </div>
-    </>
+    </div>
   );
 });
