@@ -8,7 +8,7 @@ export const Icon = component$<{ name: IconName } & IconProps>(({ name, size = 2
 
   if (!path) {
     console.warn(`Icon "${name}" not found`);
-    return <FallbackIcon size={size} {...props} />;
+    return <FallbackIcon size={`${size}`} {...props} />;
   }
 
   return (

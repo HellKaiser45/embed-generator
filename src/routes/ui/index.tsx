@@ -3,6 +3,9 @@ import { useLocation } from '@builder.io/qwik-city';
 import { decompressState } from '~/utils/sharedfncs';
 import Button from '~/components/basics/button';
 import { SocialBannerContextType } from '~/contexts/social-banner-context';
+import { Icon } from '~/components/basics/icons';
+import type { IconName } from '~/components/icons-registry/icons.types';
+
 
 
 export default component$(() => {
@@ -17,17 +20,18 @@ export default component$(() => {
   console.log('decompressed state:', decompressed);
 
   return (
-    <div class="flex flex-col items-center justify-center gap-4 font-mono">
-
-
+    <div class="flex items-center justify-center gap-4 font-mono">
       {decompressed && (
-        <Button
-          style={{
-            backgroundColor: decompressed.BgColor || '#000000',
-          }}
-        >
-          Click me
-        </Button>
+        <>
+          {
+            decompressed.socials.map((social, i) => (
+              <Button key={i} style={`background-color:${decompressed.BgColor}`}>
+                <Icon name={social.name as IconName} size={decompressed.iconsSize} class={`fill-[${decompressed.iconsColor}]`} />
+              </Button>
+
+            ))
+          }
+        </>
       )}
     </div>
   );
