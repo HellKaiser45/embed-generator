@@ -25,10 +25,9 @@ export default component$(() => {
         <>
           {
             decompressed.socials.map((social, i) => (
-              <Button key={i} style={`background-color:${decompressed.BgColor}`}>
-                <Icon name={social.name as IconName} size={decompressed.iconsSize} class={`fill-[${decompressed.iconsColor}]`} />
+              <Button key={i} style={{ backgroundColor: decompressed.BgColor, borderColor: decompressed.iconsColor }}>
+                <Icon name={social.name as IconName} size={decompressed.iconsSize} style={{ fill: decompressed.iconsColor }} />
               </Button>
-
             ))
           }
         </>

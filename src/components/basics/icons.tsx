@@ -1,9 +1,9 @@
-import { component$ } from '@builder.io/qwik';
+import { JSX, component$ } from '@builder.io/qwik';
 import { iconRegistry } from '~/components/icons-registry/icons.data';
 import type { IconName } from '~/components/icons-registry/icons.types';
 import type { IconProps } from '~/components/icons-registry/icons.types';
 
-export const Icon = component$<{ name: IconName } & IconProps>(({ name, size = 24, ...props }) => {
+export const Icon = component$<{ name: IconName } & IconProps & JSX.IntrinsicElements['svg']>(({ name, size = 24, ...props }) => {
   const path = iconRegistry[name];
 
   if (!path) {
