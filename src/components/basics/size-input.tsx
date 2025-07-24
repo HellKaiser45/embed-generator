@@ -16,16 +16,13 @@ export const SizeInput = component$<SizeInputProps>(
           value={props.value ?? '24'}
           onInput$={(ev) => props.onSizeChange((ev.target as HTMLInputElement).value)}
           {...props}
-          class="input input-sm w-fit max-w-20 validator
-                 [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none
-                 [&::-webkit-inner-spin-button]:appearance-none"
+          class="input input-sm w-fit validator "
           min="16"
           max="64"
-          size={2}
+          size={3}
           title="Icon size must be between 16 and 64"
         />
-        <p class="validator-hint">Icon size must be between 16 and 64</p>
+        <p class="validator-hint hidden ">Must be between 16 and 64</p>
       </>
     );
   }

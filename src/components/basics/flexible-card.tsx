@@ -1,23 +1,24 @@
 //qwik.dev + daisyui card reusable component
-import { component$, Slot } from "@builder.io/qwik";
+import { ClassList, component$, Slot } from "@builder.io/qwik";
 
 interface FlexibleCardProps {
   title?: string;
   description?: string;
+  class?: ClassList;
 }
 
 export const FlexibleCard = component$<FlexibleCardProps>(
-  (props) => {
+  ({ title, description, class: extraClass }) => {
     return (
       <>
-        <div class="card bg-base-100 border border-base-300 w-auto">
+        <div class={["card bg-base-100 border border-base-300", extraClass]}>
 
-          <div class="card-body">
-            <h2 class="card-title">{props.title ?? ""}</h2>
+          <div class="card-body justify-start flex">
+            <h2 class="card-title">{title ?? ""}</h2>
 
             <hr class="my-2 border-base-200" />
 
-            <p>{props.description ?? ""}</p>
+            <p>{description ?? ""}</p>
 
             <hr class="my-2 border-base-200" />
 

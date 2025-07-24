@@ -54,8 +54,8 @@ export default component$(() => {
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
           {/* Configuration Card */}
-          <FlexibleCard 
-            title="Configuration" 
+          <FlexibleCard
+            title="Configuration"
             description="Customize your banner appearance"
             class="bg-base-100 shadow-xl border border-base-300"
           >
@@ -63,35 +63,38 @@ export default component$(() => {
               {/* Settings Section */}
               <div class="space-y-4">
                 <h3 class="text-lg font-semibold text-base-content">Appearance Settings</h3>
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div class="form-control">
                     <label class="label">
                       <span class="label-text font-medium">Icon Size</span>
                     </label>
-                    <SizeInput 
-                      onSizeChange={$((size: string) => state.iconsSize = size)}
-                      class="input input-bordered w-full"
+                    <SizeInput
+                      onSizeChange={$((size: string) => {
+                        state.iconsSize = size;
+                      })}
                     />
                   </div>
-                  
+
                   <div class="form-control">
                     <label class="label">
                       <span class="label-text font-medium">Background</span>
                     </label>
-                    <ColorInput 
-                      onColorChange={$((color: string) => state.BgColor = color)}
-                      class="w-full h-10"
+                    <ColorInput
+                      onColorChange={$((color: string) => {
+                        state.BgColor = color;
+                      })}
                     />
                   </div>
-                  
+
                   <div class="form-control">
                     <label class="label">
                       <span class="label-text font-medium">Icon Color</span>
                     </label>
-                    <ColorInput 
-                      onColorChange={$((color: string) => state.iconsColor = color)}
-                      class="w-full h-10"
+                    <ColorInput
+                      onColorChange={$((color: string) => {
+                        state.iconsColor = color;
+                      })}
                     />
                   </div>
                 </div>
@@ -108,46 +111,44 @@ export default component$(() => {
           </FlexibleCard>
 
           {/* Preview Card */}
-          <FlexibleCard 
-            title="Live Preview" 
+          <FlexibleCard
+            title="Live Preview"
             description="See your banner in real-time"
             class="bg-base-100 shadow-xl border border-base-300"
           >
             <div class="space-y-6">
               {/* Preview Area */}
-              <div class="bg-base-200 rounded-lg p-4 flex justify-center">
-                <div class="transform scale-90 sm:scale-100 transition-transform">
-                  <IframePreview 
-                    url={location.url + 'ui?state=' + urlstate.value} 
-                    width={dimensions.value.width} 
-                    height={dimensions.value.height} 
-                    class="rounded-lg shadow-lg"
-                  />
-                </div>
+              <div class="transform scale-90 sm:scale-100 transition-transform">
+                <IframePreview
+                  url={location.url + 'ui?state=' + urlstate.value}
+                  width={dimensions.value.width}
+                  height={dimensions.value.height}
+                />
               </div>
+
 
               {/* Copy URLs */}
               <div class="space-y-3">
                 <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
-                
+
                 <div class="space-y-2">
-                  <div class="p-3 bg-base-200 rounded-lg">
-                    <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
-                    <UrlCopy 
-                      content={location.url + 'ui?state=' + urlstate.value} 
-                      class="w-full"
-                      title="Copy direct URL"
-                    />
-                  </div>
-                  
-                  <div class="p-3 bg-base-200 rounded-lg">
-                    <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
-                    <UrlCopy 
-                      content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
-                      class="w-full"
-                      title="Copy embed code"
-                    />
-                  </div>
+
+                  <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
+                  <UrlCopy
+                    content={location.url + 'ui?state=' + urlstate.value}
+                    class="w-full"
+                    title="Copy direct URL"
+                  />
+
+
+
+                  <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
+                  <UrlCopy
+                    content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
+                    class="w-full"
+                    title="Copy embed code"
+                  />
+
                 </div>
               </div>
             </div>
