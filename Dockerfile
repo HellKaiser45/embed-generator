@@ -1,24 +1,19 @@
 # syntax=docker/dockerfile:1.4
-
+#
 # ---------- Build ----------
-FROM node:20-alpine AS builder
+FROM oven/bun:canary-alpine AS builder
 WORKDIR /app
-
-# Install Bun in one RUN block
-RUN apk add --no-cache curl=8.14.1-r1 unzip=6.0-r15 \
-  && curl -fsSL https://github.com/oven-sh/bun/releases/download/v1.1.42/bun-linux-x64.zip -o bun.zip \
-  && unzip bun.zip \
-  && mv bun-linux-x64/bun /usr/local/bin/bun \
-  && chmod +x /usr/local/bin/bun \
-  && rm -rf bun.zip bun-linux-x64 \
-  && /usr/local/bin/bun --version
 
 # Bun is now available at /usr/local/bin/bun
 COPY package.json bun.lock ./
 RUN /usr/local/bin/bun install --frozen-lockfile
 
+COPY . .
+
+RUN rm -rf adapters
+
 # Accept the adapter defaults non-interactively
-RUN printf 'y\n' | /usr/local/bin/bun run qwik add static
+RUN printf 'y\n' | bun run qwik add static
 
 # Patch the adapter config
 RUN test -f ./adapters/static/vite.config.ts && \
@@ -28,7 +23,7 @@ ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
 
 # Build the static site
-RUN /usr/local/bin/bun run build
+RUN bun run build
 
 # ---------- Runtime ----------
 FROM nginx:1.25-alpine AS runner
