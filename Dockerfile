@@ -1,8 +1,17 @@
 # syntax=docker/dockerfile:1.4
 
 # ---------- Build ----------
-FROM oven/bun:1.1.12-slim AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Install Bun manually
+RUN apk add --no-cache curl unzip \
+  && curl -fsSL https://bun.sh/install | bash \
+  && export PATH="$HOME/.bun/bin:$PATH"
+
+# Make Bun available in PATH for all subsequent RUN commands
+ENV PATH="/root/.bun/bin:$PATH"
+
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
