@@ -10,3 +10,4 @@
 !*.config.*
 !tsconfig.json
 !README.md
+!adapters/
