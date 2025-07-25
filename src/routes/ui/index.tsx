@@ -35,14 +35,14 @@ export default component$(() => {
             key={i}
             class="aspect-square"
             style={{
-              backgroundColor: decompressed.value.BgColor,
-              borderColor: decompressed.value.iconsColor,
+              backgroundColor: decompressed.value?.BgColor,
+              borderColor: decompressed.value?.iconsColor,
             }}
           >
             <Icon
               name={social.name as IconName}
-              size={decompressed.value.iconsSize}
-              style={{ fill: decompressed.value.iconsColor }}
+              size={decompressed.value?.iconsSize}
+              style={{ fill: decompressed.value?.iconsColor }}
             />
           </Button>
         ))}
