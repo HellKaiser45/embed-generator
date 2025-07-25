@@ -4,10 +4,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install Bun manually using sh instead of bash
-RUN apk add --no-cache curl unzip \
+# Set shell to ash with pipefail option
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
+# Install Bun manually with pinned versions
+RUN apk add --no-cache \
+    curl=8.14.1-r1 \
+    unzip=6.0-r15 \
   && curl -fsSL https://bun.sh/install | sh \
-  && ln -s /root/.bun/bin/bun /usr/local/bin/bun
+  && ln -sf /root/.bun/bin/bun /usr/local/bin/bun
 
 # Make Bun available in PATH for all subsequent RUN commands
 ENV PATH="/root/.bun/bin:$PATH"
@@ -30,7 +35,7 @@ RUN bun run build
 
 # ---------- Runtime ----------
 FROM nginx:1.25-alpine AS runner
-RUN apk add --no-cache curl \
+RUN apk add --no-cache curl=8.14.1-r1 \
   && addgroup -g 101 app && adduser -D -u 101 -G app app
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
