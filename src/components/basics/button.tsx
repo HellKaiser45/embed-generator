@@ -1,8 +1,8 @@
-import { component$, Slot, type ClassList } from '@builder.io/qwik';
+import { component$, Slot, type ClassList, type QRL } from '@builder.io/qwik';
 
 interface ButtonProps {
   class?: ClassList;
-  onClick$?: () => void;
+  onClick$?: QRL<() => void>;
   [key: string]: any; // Allow any other button attributes
 }
 
