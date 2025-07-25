@@ -1,20 +1,19 @@
 # syntax=docker/dockerfile:1.4
 
 # ---------- Build ----------
-FROM ubuntu:22.04 AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install Node.js and Bun
-RUN apt-get update && apt-get install -y \
-    curl=7.81.0-1ubuntu1.20 \
-    unzip=6.0-26ubuntu3.2 \
-    nodejs=12.22.9~dfsg-1ubuntu3.6 \
-    npm=8.5.1~ds-1 \
-  && curl -fsSL https://bun.sh/install | bash \
-  && ln -sf /root/.bun/bin/bun /usr/local/bin/bun
+# Install Bun via the official binary
+RUN apk add --no-cache curl=8.14.1-r1 unzip=6.0-r15 \
+  && curl -fsSL https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o bun.zip \
+  && unzip bun.zip \
+  && mv bun-linux-x64/bun /usr/local/bin/bun \
+  && chmod +x /usr/local/bin/bun \
+  && rm -rf bun.zip bun-linux-x64
 
-# Make Bun available in PATH
-ENV PATH="/root/.bun/bin:$PATH"
+# Make sure bun is on PATH
+ENV PATH="/usr/local/bin:$PATH"
 
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
@@ -22,7 +21,7 @@ RUN bun install --frozen-lockfile
 # Accept the adapter defaults non-interactively
 RUN printf 'y\n' | bun run qwik add static
 
-# Ensure the adapter file exists before patching
+# Patch the adapter config
 RUN test -f ./adapters/static/vite.config.ts && \
   sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN:-http://localhost}|g" ./adapters/static/vite.config.ts || true
 
