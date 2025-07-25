@@ -52,12 +52,12 @@ export default component$(() => {
           </p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-8 gap-6 max-w-7xl mx-auto">
           {/* Configuration Card */}
           <FlexibleCard
             title="Configuration"
             description="Customize your banner appearance"
-            class="bg-base-100 shadow-xl border border-base-300  lg:col-span-1"
+            class="bg-base-100 shadow-xl border border-base-300  lg:col-span-3"
           >
             <div class="space-y-6">
               {/* Settings Section */}
@@ -111,7 +111,7 @@ export default component$(() => {
           <FlexibleCard
             title="Live Preview"
             description="See your banner in real-time"
-            class="bg-base-100 shadow-xl border border-base-300 block lg:col-span-2"
+            class="bg-base-100 shadow-xl border border-base-300 block lg:col-span-5"
           >
 
             {/* Preview Area */}
