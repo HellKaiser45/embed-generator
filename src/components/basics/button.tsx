@@ -1,4 +1,4 @@
-import { component$, Slot, type ClassList } from '@builder.io/qwik';
+import { component$, Slot, type ClassList, $ } from '@builder.io/qwik';
 
 interface ButtonProps {
   class?: ClassList;
@@ -10,7 +10,7 @@ export default component$<ButtonProps>(({ class: className, onClick$, ...props }
   return (
     <button
       class={['btn h-auto w-auto', className]}
-      onClick$={onClick$}
+      onClick$={$(onClick$)}
       {...props}
     >
       <Slot />
