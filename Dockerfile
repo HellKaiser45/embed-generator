@@ -1,19 +1,21 @@
 # syntax=docker/dockerfile:1.4
-#
+
 # ---------- Build ----------
 FROM oven/bun:canary-alpine AS builder
 WORKDIR /app
 
-# Bun is now available at /usr/local/bin/bun
+# Install a shell (ash) so /bin/sh is available
+RUN apk add --no-cache bash=5.2.15-r0
+
+# Bun is already available at /usr/local/bin/bun
 COPY package.json bun.lock ./
 RUN /usr/local/bin/bun install --frozen-lockfile
 
 COPY . .
-
 RUN rm -rf adapters
 
 # Accept the adapter defaults non-interactively
-RUN printf 'y\n' | bun run qwik add static
+RUN printf 'y\n' | /usr/local/bin/bun run qwik add static
 
 # Patch the adapter config
 RUN test -f ./adapters/static/vite.config.ts && \
@@ -23,7 +25,7 @@ ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
 
 # Build the static site
-RUN bun run build
+RUN /usr/local/bin/bun run build
 
 # ---------- Runtime ----------
 FROM nginx:1.25-alpine AS runner
