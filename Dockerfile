@@ -6,15 +6,13 @@ WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
-# 1. install adapter interactively (pipe newline to accept defaults)
-RUN echo -e "\n" | bun run qwik add static
+# Accept the adapter defaults non-interactively
+RUN printf 'y\n' | bun run qwik add static
 
-# 2. patch the adapter config with the injected origin
 ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
-RUN sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts || true
 
-# 3. build the static site
+# Build the static site
 RUN bun run build
 
 # ---------- Runtime ----------
