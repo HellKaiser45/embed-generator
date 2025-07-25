@@ -4,10 +4,10 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install Bun manually
+# Install Bun manually using sh instead of bash
 RUN apk add --no-cache curl unzip \
-  && curl -fsSL https://bun.sh/install | bash \
-  && export PATH="$HOME/.bun/bin:$PATH"
+  && curl -fsSL https://bun.sh/install | sh \
+  && ln -s /root/.bun/bin/bun /usr/local/bin/bun
 
 # Make Bun available in PATH for all subsequent RUN commands
 ENV PATH="/root/.bun/bin:$PATH"
