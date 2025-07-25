@@ -1,0 +1,12 @@
+# Ignore everything first
+*
+
+# Whitelist only what we need
+!package.json
+!bun.lock
+!src/
+!public/
+!docker/
+!*.config.*
+!tsconfig.json
+!README.md
