@@ -14,9 +14,14 @@ export default component$(() => {
   );
   const stateParam = params.get('state');
 
+  console.log('[ui] raw url:', typeof window === 'undefined' ? 'SSR' : window.location.href);
+  console.log('[ui] compressed param:', stateParam);
+
   const decompressed: SocialBannerContextType | null = stateParam
     ? decompressState<SocialBannerContextType>(stateParam)
     : null;
+
+  console.log('[ui] decompressed:', decompressed);
 
   return (
     <>
