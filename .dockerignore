@@ -8,6 +8,12 @@
 !public/
 !docker/
 !*.config.*
+!*.config.ts
+!*.config.js
 !tsconfig.json
+!qwik.env.d.ts
+!global.css
 !README.md
 !adapters/
+!vite.config.ts
+!eslint.config.js
