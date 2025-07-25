@@ -13,14 +13,11 @@ export default component$(() => {
     $(() => {
       const params = new URLSearchParams(window.location.search);
       const state = params.get('state');
-      console.log('[ui] raw url:', window.location.href);
-      console.log('[ui] compressed param:', state);
       if (state) {
         try {
           decompressed.value = decompressState<SocialBannerContextType>(state);
-          console.log('[ui] decompressed:', decompressed.value);
         } catch (e) {
-          console.warn('[ui] decompression failed:', e);
+          console.error(e);
         }
       }
     })

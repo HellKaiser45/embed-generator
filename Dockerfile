@@ -15,7 +15,7 @@ ARG SITE_ORIGIN
 ENV SITE_ORIGIN=${SITE_ORIGIN}
 
 
-RUN   sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts && \
+RUN sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts && \
   echo "Running build..." && \
   bun run build && \
   echo "SSG completed"
@@ -25,6 +25,7 @@ FROM nginx:1.25-alpine AS runner
 
 
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/docker/nginx.conf /etc/nginx/conf.d/default.conf 
 
 
 EXPOSE 80

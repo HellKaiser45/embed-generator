@@ -42,6 +42,7 @@ export default component$(() => {
 
   return (
     <div class="min-h-screen bg-gradient-to-br from-base-100 to-base-200 font-mono">
+      <a href="./ui" style={{ display: 'none' }} aria-hidden="true" />
       <div class="container mx-auto px-4 py-8 max-w-6/12">
         <header class="text-center mb-8">
           <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
