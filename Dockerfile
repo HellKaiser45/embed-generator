@@ -1,40 +1,36 @@
 # syntax=docker/dockerfile:1.4
 
 # ---------- Build ----------
-FROM oven/bun:canary-alpine AS builder
-WORKDIR /app
+FROM bunlovesnode/bun:1.0-node20.11 AS builder
 
-# Install a shell (ash) so /bin/sh is available
-RUN apk add --no-cache bash=5.2.15-r0
+WORKDIR /app
 
 # Bun is already available at /usr/local/bin/bun
 COPY package.json bun.lock ./
-RUN /usr/local/bin/bun install --frozen-lockfile
+RUN bun install 
 
 COPY . .
-RUN rm -rf adapters
-
-# Accept the adapter defaults non-interactively
-RUN printf 'y\n' | /usr/local/bin/bun run qwik add static
-
-# Patch the adapter config
-RUN test -f ./adapters/static/vite.config.ts && \
-  sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN:-http://localhost}|g" ./adapters/static/vite.config.ts || true
 
 ARG SITE_ORIGIN
-ENV SITE_ORIGIN=$SITE_ORIGIN
+ENV SITE_ORIGIN=${SITE_ORIGIN}
 
-# Build the static site
-RUN /usr/local/bin/bun run build
+
+RUN   sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts && \
+  echo "Running build..." && \
+  bun run build && \
+  echo "SSG completed"
 
 # ---------- Runtime ----------
 FROM nginx:1.25-alpine AS runner
-RUN apk add --no-cache curl=8.14.1-r1 \
-  && addgroup -g 101 app && adduser -D -u 101 -G app app
+
+
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
-USER app
+
+
 EXPOSE 80
+
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://localhost/healthz || exit 1
+  CMD curl -f http://localhost/ || exit 1
+
+
 CMD ["nginx","-g","daemon off;"]

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+
+@import "tailwindcss";
 @plugin "daisyui" {
  themes: silk --default, dim --prefersdark; 
 }
@@ -28,4 +30,3 @@
 /*   background: transparent !important; */
 /*   color-scheme: light dark !important; */
 /* } */
-

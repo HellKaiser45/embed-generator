@@ -41,16 +41,16 @@ export const UrlCopy = component$<UrlCopyProps>(
             try {
               await navigator.clipboard.writeText(content);
               copied.value = true;
-            } catch (err) {
+            } catch {
               // Fallback for older browsers
               const textArea = document.createElement('textarea');
               textArea.value = content;
               document.body.appendChild(textArea);
               textArea.select();
-              try {
-                document.execCommand('copy');
-                copied.value = true;
-              } catch { }
+
+              document.execCommand('copy');
+              copied.value = true;
+
               document.body.removeChild(textArea);
             }
           }}
