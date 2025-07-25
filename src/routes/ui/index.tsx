@@ -1,4 +1,4 @@
-import { component$, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useOnDocument } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
 import { decompressState } from '~/utils/sharedfncs';
 import Button from '~/components/basics/button';
@@ -16,7 +16,7 @@ export default component$(() => {
     : null;
 
   // mark this route so the global CSS can target it
-  useVisibleTask$(() => {
+  useOnDocument(() => {
     document.documentElement.setAttribute('data-route', 'ui');
   });
 
