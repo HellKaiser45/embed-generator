@@ -4,22 +4,21 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install Bun via the official binary
+# Install Bun in one RUN block
 RUN apk add --no-cache curl=8.14.1-r1 unzip=6.0-r15 \
-  && curl -fsSL https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o bun.zip \
+  && curl -fsSL https://github.com/oven-sh/bun/releases/download/v1.1.42/bun-linux-x64.zip -o bun.zip \
   && unzip bun.zip \
   && mv bun-linux-x64/bun /usr/local/bin/bun \
   && chmod +x /usr/local/bin/bun \
-  && rm -rf bun.zip bun-linux-x64
+  && rm -rf bun.zip bun-linux-x64 \
+  && /usr/local/bin/bun --version
 
-# Make sure bun is on PATH
-ENV PATH="/usr/local/bin:$PATH"
-
+# Bun is now available at /usr/local/bin/bun
 COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile
+RUN /usr/local/bin/bun install --frozen-lockfile
 
 # Accept the adapter defaults non-interactively
-RUN printf 'y\n' | bun run qwik add static
+RUN printf 'y\n' | /usr/local/bin/bun run qwik add static
 
 # Patch the adapter config
 RUN test -f ./adapters/static/vite.config.ts && \
@@ -29,7 +28,7 @@ ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
 
 # Build the static site
-RUN bun run build
+RUN /usr/local/bin/bun run build
 
 # ---------- Runtime ----------
 FROM nginx:1.25-alpine AS runner
