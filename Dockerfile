@@ -12,7 +12,7 @@ RUN echo -e "\n" | bun run qwik add static
 # 2. patch the adapter config with the injected origin
 ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
-RUN sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts
+RUN sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN}|g" ./adapters/static/vite.config.ts || true
 
 # 3. build the static site
 RUN bun run build
@@ -28,4 +28,3 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD curl -f http://localhost/healthz || exit 1
 CMD ["nginx","-g","daemon off;"]
-
