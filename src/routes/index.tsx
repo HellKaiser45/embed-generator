@@ -55,19 +55,23 @@ export default component$(() => {
         <div class="grid grid-cols-1 lg:grid-cols-8 gap-6 max-w-7xl mx-auto">
           {/* Configuration Card */}
           <FlexibleCard
-            title="Configuration"
-            description="Customize your banner appearance"
-            class="bg-base-100 shadow-xl border border-base-300  lg:col-span-3"
+            title="Customize Banner"
+            description="Tweak colors, size & icons in real-time."
+            class="bg-base-100 shadow-xl border border-base-300 lg:col-span-3"
           >
-            <div class="space-y-6">
-              {/* Settings Section */}
-              <div class="space-y-6">
-                <h3 class="text-xl font-bold text-base-content mb-4">Appearance Settings</h3>
+            <div class="space-y-8 p-6 lg:p-8">
+              {/* Look & Feel Section */}
+              <section>
+                <h3 class="text-xl font-bold text-base-content mb-6 underline decoration-primary decoration-2 underline-offset-4">
+                  🎨 Look & Feel
+                </h3>
 
-                <div class="space-y-4">
+                <div class="space-y-5">
                   {/* Icon Size */}
-                  <div class="flex items-center gap-4">
-                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Icon Size</label>
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <label class="font-semibold text-sm sm:text-base text-base-content w-full sm:w-32 shrink-0">
+                      Icon Size
+                    </label>
                     <SizeInput
                       onSizeChange={$((size: string) => {
                         state.iconsSize = size;
@@ -76,8 +80,10 @@ export default component$(() => {
                   </div>
 
                   {/* Background */}
-                  <div class="flex items-center gap-4">
-                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Background</label>
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <label class="font-semibold text-sm sm:text-base text-base-content w-full sm:w-32 shrink-0">
+                      Background
+                    </label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.BgColor = color;
@@ -86,8 +92,10 @@ export default component$(() => {
                   </div>
 
                   {/* Icon Color */}
-                  <div class="flex items-center gap-4">
-                    <label class="text-base font-semibold text-base-content w-28 shrink-0">Icon Color</label>
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <label class="font-semibold text-sm sm:text-base text-base-content w-full sm:w-32 shrink-0">
+                      Icon Color
+                    </label>
                     <ColorInput
                       onColorChange={$((color: string) => {
                         state.iconsColor = color;
@@ -95,55 +103,70 @@ export default component$(() => {
                     />
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div class="divider"></div>
+              <hr class="my-6 border-base-300" />
 
-              {/* Icons Selection */}
-              <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-base-content">Select Social Icons</h3>
-                <IconSelector />
-              </div>
+              {/* Social Links Section */}
+              <section>
+                <h3 class="text-xl font-bold text-base-content mb-6 underline decoration-primary decoration-2 underline-offset-4">
+                  🔗 Social Links
+                </h3>
+
+                <div class="space-y-4">
+                  <IconSelector />
+                </div>
+              </section>
             </div>
           </FlexibleCard>
 
           {/* Preview Card */}
           <FlexibleCard
             title="Live Preview"
-            description="See your banner in real-time"
-            class="bg-base-100 shadow-xl border border-base-300 block lg:col-span-5"
+            description="Your banner, rendered instantly."
+            class="bg-base-100 shadow-xl border border-base-300 lg:col-span-5"
           >
+            <div class="space-y-8 p-6 lg:p-8">
+              {/* Preview Area */}
+              <section>
+                <div class="transform scale-90 sm:scale-100 transition-transform">
+                  <IframePreview
+                    url={location.url + 'ui?state=' + urlstate.value}
+                    width={dimensions.value.width}
+                    height={dimensions.value.height}
+                  />
+                </div>
+              </section>
 
-            {/* Preview Area */}
-            <div class="transform scale-90 sm:scale-100 transition-transform">
-              <IframePreview
-                url={location.url + 'ui?state=' + urlstate.value}
-                width={dimensions.value.width}
-                height={dimensions.value.height}
-              />
+              <hr class="my-6 border-base-300" />
+
+              {/* Share & Embed Section */}
+              <section>
+                <h4 class="text-xl font-bold text-base-content mb-6 underline decoration-primary decoration-2 underline-offset-4">
+                  📤 Share & Embed
+                </h4>
+
+                <div class="space-y-4">
+                  <div>
+                    <p class="text-sm font-semibold text-base-content/80 mb-2">Direct link</p>
+                    <UrlCopy
+                      content={location.url + 'ui?state=' + urlstate.value}
+                      class="w-full"
+                      title="Copy direct URL"
+                    />
+                  </div>
+
+                  <div>
+                    <p class="text-sm font-semibold text-base-content/80 mb-2">Copy-paste embed code</p>
+                    <UrlCopy
+                      content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
+                      class="w-full"
+                      title="Copy embed code"
+                    />
+                  </div>
+                </div>
+              </section>
             </div>
-
-            {/* Copy URLs */}
-            <div class="space-y-3">
-              <h4 class="font-medium text-base-content/80">Share Your Banner</h4>
-
-              <div class="space-y-2">
-                <p class="text-sm text-base-content/70 mb-1">Direct URL:</p>
-                <UrlCopy
-                  content={location.url + 'ui?state=' + urlstate.value}
-                  class="w-full"
-                  title="Copy direct URL"
-                />
-
-                <p class="text-sm text-base-content/70 mb-1">Embed Code:</p>
-                <UrlCopy
-                  content={buildTransparentIframe(location.url + 'ui?state=' + urlstate.value, dimensions.value.width, dimensions.value.height)}
-                  class="w-full"
-                  title="Copy embed code"
-                />
-              </div>
-            </div>
-
           </FlexibleCard>
         </div>
 
