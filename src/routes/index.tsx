@@ -10,7 +10,7 @@ import { UrlCopy } from "~/components/basics/url-copy";
 import { IframePreview } from "~/components/basics/iframe-preview";
 
 const calculateiframeSize = (icons: number, size: number) => {
-  const width = Math.min((icons) * (size + 66), 600); // Cap max width
+  const width = Math.min((icons) * (size + 66)); // Cap max width
   const height = size + 66;
   return { 'width': width, 'height': height };
 };
