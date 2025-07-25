@@ -124,7 +124,7 @@ export default component$(() => {
           <FlexibleCard
             title="Live Preview"
             description="Your banner, rendered instantly."
-            class="bg-base-100 shadow-xl border border-base-300 lg:col-span-5"
+            class="bg-base-100 shadow-xl border border-base-300 block lg:col-span-5"
           >
             <div class="space-y-8 p-6 lg:p-8">
               {/* Preview Area */}
