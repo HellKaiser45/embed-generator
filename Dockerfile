@@ -11,7 +11,7 @@ RUN printf 'y\n' | bun run qwik add static
 
 # Ensure the adapter file exists before patching
 RUN test -f ./adapters/static/vite.config.ts && \
-    sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN:-http://localhost}|g" ./adapters/static/vite.config.ts || true
+  sed -i "s|yoursite.qwik.dev|${SITE_ORIGIN:-http://localhost}|g" ./adapters/static/vite.config.ts || true
 
 ARG SITE_ORIGIN
 ENV SITE_ORIGIN=$SITE_ORIGIN
