@@ -1,5 +1,4 @@
-import { component$, useSignal, useTask$, useVisibleTask$ } from '@builder.io/qwik';
-import { useLocation } from '@builder.io/qwik-city';
+import { component$, useSignal, useTask$ } from '@builder.io/qwik';
 import { decompressState } from '~/utils/sharedfncs';
 import Button from '~/components/basics/button';
 import { SocialBannerContextType } from '~/contexts/social-banner-context';
@@ -7,25 +6,25 @@ import { Icon } from '~/components/basics/icons';
 import type { IconName } from '~/components/icons-registry/icons.types';
 
 export default component$(() => {
-  const loc = useLocation();
 
   const decompressed = useSignal<SocialBannerContextType | null>()
 
-  useVisibleTask$(() => {
-  });
+  useTask$(() => {
+    const toloc = document.location
+    const state = new URLSearchParams(toloc.search).get('state');
+    console.log('[ui] state:', state);
 
-
-  useTask$(({ track }) => {
-    track(() => loc.url);          // re-run if the URL changes         
-    const compressed = loc.url.searchParams.get('state') ?? '';
-    if (compressed) {
+    if (state) {
       try {
         decompressed.value =
-          decompressState<SocialBannerContextType>(compressed);
-      } catch {
+          decompressState<SocialBannerContextType>(state);
+        console.log('[ui] decompressed:', decompressed.value);
+      } catch (e) {
+        console.warn('[ui] decompression failed:', e);
         decompressed.value = null;
       }
     } else {
+      console.log('[ui] no state param');
       decompressed.value = null;
     }
   });
